@@ -1,0 +1,35 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-test-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ping-test-pod
+  template:
+    metadata:
+      labels:
+        app: ping-test-pod
+    spec:
+      containers:
+        - name: ping-test-pod
+          image: noscopev6/host-test:ip
+          ports:
+            - containerPort: 8080
+
+---
+# service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: ping-test-service
+spec:
+  type: NodePort
+  selector:
+    app: ping-test-pod
+  ports:
+    - protocol: TCP
+      port: 10001  # Your chosen port
+      targetPort: 8080
