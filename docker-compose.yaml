@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  ping-test-pod:
+    image: noscopev6/host-test:ip
+    ports:
+      - "10001:8080"
